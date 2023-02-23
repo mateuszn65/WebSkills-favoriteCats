@@ -4,6 +4,9 @@
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/cats">Cats</a></li>
+            <% if (locals.userStatus) { %>
+                <li>I am logged in motherfucker</li>
+            <% } %>
             <% if (locals.user) { %>
                 <li><a href="/cats/<%= user.id %>">MyFavoriteCats</a></li>
                 <li><a href="/auth/logout">SignOut</a></li>
