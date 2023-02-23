@@ -1,0 +1,10 @@
+<h2>Login</h2>
+<form action="/auth/login" method="post">
+    <%- include("_form_fields.ejs", {email: false}) %>
+    <button type="submit">Login</button>
+</form>
+<h2>Register</h2>
+<form action="/auth/register" method="post">
+    <%- include("_form_fields.ejs", {email: true}) %>
+    <button type="submit">Register</button>
+</form>

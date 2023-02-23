@@ -1,0 +1,15 @@
+<header>
+    <nav>
+        <a href="/">FavoriteCatsOnline</a>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/cats">Cats</a></li>
+            <% if (locals.user) { %>
+                <li><a href="/cats/<%= user.id %>">MyFavoriteCats</a></li>
+                <li><a href="/auth/logout">SignOut</a></li>
+            <% } else { %>
+                <li><a href="/auth/login">SignIn</a></li>
+            <% } %>
+        </ul>
+    </nav>
+</header>
