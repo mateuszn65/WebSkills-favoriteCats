@@ -1,4 +1,5 @@
-if (process.env.NODE_ENV !== 'production') {
+const prod = process.env.NODE_ENV === 'production'
+if (!prod) {
     require('dotenv').config()
 }
 const express = require('express');
@@ -11,22 +12,29 @@ const session = require('express-session')
 const indexRouter = require('./routes/index');
 const catsRouter = require('./routes/cats');
 const authRouter = require('./routes/auth');
-const {setUser}  = require('./middleware/sessionUtils');
+const {setUser}  = require('./middleware/sessionMiddleware');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
 app.use(expressLayouts);
+app.use(express.static('public'));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static('public'));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true
-}))
+    saveUninitialized: false,
+    cookie: { 
+        httpOnly: true,
+        secure: prod,
+        sameSite: prod ? 'none' : 'lax',
+        maxAge: parseInt(process.env.SESSION_MAX_AGE),
+     },
+}));
 app.use(setUser);
 
 const mongoose = require('mongoose');

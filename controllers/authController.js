@@ -1,6 +1,5 @@
 
 const User = require('../models/user');
-const RefreshToken = require('../models/refreshToken');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -10,13 +9,7 @@ exports.login = (req, res) => {
 }
 
 exports.logout = async(req, res) => {
-    // const refreshToken = req.cookies.refreshToken;
-    // if (!refreshToken) return res.status(401).send('Access Denied');
-
     try {
-        // await RefreshToken.deleteOne({ token: refreshToken })
-        res.clearCookie('accessToken');
-        res.clearCookie('refreshJwt');
         req.session.destroy();
         res.redirect('/auth/login')
     } catch (error) {
@@ -25,6 +18,26 @@ exports.logout = async(req, res) => {
 }
 
 exports.login_post = async(req, res) => {
+    const { username, password } = req.body;
+    try {
+        const user = await User.findOne({username:username});
+        if (user == null){
+            return res.redirect('/auth/login')
+        }
+        const isAuthenticated = await bcrypt.compare(password, user.password)
+        if (!isAuthenticated) {
+            return res.redirect('/auth/login')
+        }
+
+        req.session.user = { id: user.id, isLoggedIn: true}
+        res.redirect('/')
+    } catch (error) {
+        res.redirect('/auth/login')
+    }
+}
+
+
+exports.login_post2 = async(req, res) => {
     const { username, password } = req.body;
 
     try {
@@ -63,6 +76,24 @@ exports.login_post = async(req, res) => {
 }
 
 exports.register_post = async(req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        const user = new User({
+            username: req.body.username,
+            email: req.body.email,
+            password: hashedPassword
+        })
+
+        await user.save()
+        req.session.user = { id: user.id, isLoggedIn: true}
+        res.redirect('/')
+    } catch (error) {
+        console.log(error)
+        res.redirect('/auth/login')
+    }
+}
+
+exports.register_post2 = async(req, res) => {
     
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
@@ -85,13 +116,4 @@ exports.register_post = async(req, res) => {
         console.log(error)
         res.redirect('/auth/login')
     }
-}
-
-
-function createAccessToken(userId) {
-    return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn:  process.env.ACCESS_TOKEN_EXPIRATION + 's' })
-}
-
-function createRefreshToken(userId) {
-    return jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION + 's' })
 }

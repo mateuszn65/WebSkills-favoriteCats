@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const catsController = require('../controllers/catsController');
-const authController = require('../controllers/authController')
-const { isAuthenticated } = require('../middleware/authMiddleware');
+const { isLoggedIn } = require('../middleware/sessionMiddleware');
+
 
 router.get('/', catsController.cats)
-router.get('/:id', isAuthenticated, catsController.favorite_cats)
+router.get('/:id', isLoggedIn, catsController.favorite_cats)
 
 module.exports = router;

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const authController = require('../controllers/authController');
-const { isLoggedIn, isNotLoggedIn } = require('../middleware/sessionUtils');
+const { isLoggedIn, isNotLoggedIn } = require('../middleware/sessionMiddleware');
 
 router.get('/login', isNotLoggedIn, authController.login);
 router.get('/logout', isLoggedIn, authController.logout);
