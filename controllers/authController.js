@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 
 exports.login = (req, res) => {
-    res.render('auth/index', { user: req.user })
+    res.render('auth/index')
 }
 
 exports.logout = async(req, res) => {
@@ -17,66 +17,55 @@ exports.logout = async(req, res) => {
     }
 }
 
-exports.login_post = async(req, res) => {
-    const { username, password } = req.body;
-    try {
-        const user = await User.findOne({username:username});
-        if (user == null){
-            return res.redirect('/auth/login')
-        }
-        const isAuthenticated = await bcrypt.compare(password, user.password)
-        if (!isAuthenticated) {
-            return res.redirect('/auth/login')
-        }
+async function validateLogin(req){
+    if (req.body.username == '' || req.body.password == '')
+        throw new Error('Please fill in all login fields')
 
-        req.session.user = { id: user.id, isLoggedIn: true}
-        res.redirect('/')
-    } catch (error) {
-        res.redirect('/auth/login')
-    }
+    const user = await User.findOne({username:req.body.username});
+    if (user == null)
+        throw new Error('Invalid credentials. No user found.')
+    
+    const isAuthenticated = await bcrypt.compare(req.body.password, user.password)
+    if (!isAuthenticated) 
+        throw new Error('Invalid credentials. Password does not match.')
+
+    return user.id
+    
 }
 
-
-exports.login_post2 = async(req, res) => {
-    const { username, password } = req.body;
-
+exports.login_post = async(req, res) => {
     try {
-        const user = await User.findOne({username:username});
-
-        if (user == null){
-            // console.log('Cannot find user')
-            return res.redirect('/auth/login')
-        } 
-
-        const match = await bcrypt.compare(password, user.password)
-        if (!match) {
-            // console.log('Wrong password')
-            return res.redirect('/auth/login')
-        }
-
-        const accessToken = createAccessToken(user.id);
-
-        // const refreshToken = createRefreshToken(user.id);
-
-        // const newRefreshToken = new RefreshToken({
-        //     token: refreshToken,
-        //     user: user.id,
-        // });
-        
-        // await newRefreshToken.save();
-
-        // res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'none' });
-        
-        res.cookie('accessToken', accessToken, { httpOnly: true, secure: true, sameSite: 'none' });
-        req.session.user = { id: user.id, isLoggedIn: true, accessTokenExpiresAt: Date.now() + parseInt(process.env.ACCESS_TOKEN_EXPIRATION) * 1000}
+        const userId = await validateLogin(req)
+        req.session.user = { id: userId, isLoggedIn: true}
         res.redirect('/')
-    } catch (err) {
-        res.redirect('/auth/login')
+    } catch (error) {
+        res.render('auth/index',{
+            userFormData: {
+                login:{
+                    username: req.body.username,
+                    password: req.body.password
+                }   
+            },
+            errorMessage: error.message
+        }) 
     }
+}
+async function validateRegister(req){
+    if (req.body.username == '' || req.body.email == '' || req.body.password == '')
+        throw new Error('Please fill in all register fields')
+
+    if (req.body.password.length < 6)
+        throw new Error('Password must be at least 6 characters')
+    
+
+    if(await User.exists({username: req.body.username}))
+        throw new Error('Username already exists')
 }
 
 exports.register_post = async(req, res) => {
     try {
+        await validateRegister(req)
+        
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
         const user = new User({
             username: req.body.username,
@@ -88,32 +77,15 @@ exports.register_post = async(req, res) => {
         req.session.user = { id: user.id, isLoggedIn: true}
         res.redirect('/')
     } catch (error) {
-        console.log(error)
-        res.redirect('/auth/login')
-    }
-}
-
-exports.register_post2 = async(req, res) => {
-    
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        const user = new User({
-            username: req.body.username,
-            email: req.body.email,
-            password: hashedPassword
+        res.render('auth/index',{
+            userFormData: {
+                register:{
+                    username: req.body.username,
+                    email: req.body.email,
+                    password: req.body.password
+                }   
+            },
+            errorMessage: error.message
         })
-
-        await user.save()
-        const accessToken = createAccessToken(user.id)
-        res.cookie('accessToken', accessToken, { httpOnly: true, secure: true, sameSite: 'none' })
-        
-        // const refreshToken = createRefreshToken(user.id)
-        // res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'none' })
-        
-        req.session.user = { id: user.id, isLoggedIn: true, accessTokenExpiresAt: Date.now() + parseInt(process.env.ACCESS_TOKEN_EXPIRATION) * 1000}
-        res.redirect('/')
-    } catch (error) {
-        console.log(error)
-        res.redirect('/auth/login')
     }
 }
