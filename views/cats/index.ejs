@@ -1,1 +1,16 @@
 <h2>Cats</h2>
+<div>
+    <% cats.forEach(cat=>{ %>
+        <h3> <%= cat.imageTitle %> </h3>
+        <% if (cat.breed) { %>
+            <h4><%= cat.breed %></h4>
+        <% } %>
+        <a href="/cats/<%= cat.id %>">
+            <img src="<%= cat.imageUrl %>" alt="" width="300">
+        </a>
+        <p><%= cat.shortDescription %></p>
+
+        <%- include("../partials/favorite_button.ejs", {cat: cat}) %>
+        <%- include("../partials/admin_buttons.ejs", {cat: cat}) %>
+    <% }) %>
+</div>

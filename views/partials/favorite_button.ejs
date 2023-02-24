@@ -1,0 +1,11 @@
+<% if (locals.user) { %>
+    <% if (locals.cat.isFavorite) { %>
+        <form action="/user/favoriteCats/<%= cat.id %>?_method=DELETE" method="post">
+            <button type="submit">Remove from Favorites</button>
+        </form>
+    <% } else { %>
+        <form action="/user/favoriteCats/<%= cat.id %>" method="post">
+            <button type="submit">Add to Favorites</button>
+        </form>
+    <% } %>
+<% } %>

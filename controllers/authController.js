@@ -1,6 +1,5 @@
 
 const User = require('../models/user');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 
@@ -17,26 +16,10 @@ exports.logout = async(req, res) => {
     }
 }
 
-async function validateLogin(req){
-    if (req.body.username == '' || req.body.password == '')
-        throw new Error('Please fill in all login fields')
-
-    const user = await User.findOne({username:req.body.username});
-    if (user == null)
-        throw new Error('Invalid credentials. No user found.')
-    
-    const isAuthenticated = await bcrypt.compare(req.body.password, user.password)
-    if (!isAuthenticated) 
-        throw new Error('Invalid credentials. Password does not match.')
-
-    return user.id
-    
-}
-
-exports.login_post = async(req, res) => {
+exports.loginPost = async(req, res) => {
     try {
-        const userId = await validateLogin(req)
-        req.session.user = { id: userId, isLoggedIn: true}
+        const user = await validateLogin(req)
+        req.session.user = { id: user.id, isLoggedIn: true, isAdmin: user.admin}
         res.redirect('/')
     } catch (error) {
         res.render('auth/index',{
@@ -50,19 +33,9 @@ exports.login_post = async(req, res) => {
         }) 
     }
 }
-async function validateRegister(req){
-    if (req.body.username == '' || req.body.email == '' || req.body.password == '')
-        throw new Error('Please fill in all register fields')
 
-    if (req.body.password.length < 6)
-        throw new Error('Password must be at least 6 characters')
-    
 
-    if(await User.exists({username: req.body.username}))
-        throw new Error('Username already exists')
-}
-
-exports.register_post = async(req, res) => {
+exports.registerPost = async(req, res) => {
     try {
         await validateRegister(req)
         
@@ -88,4 +61,31 @@ exports.register_post = async(req, res) => {
             errorMessage: error.message
         })
     }
+}
+
+
+async function validateLogin(req){
+    if (req.body.username == '' || req.body.password == '')
+        throw new Error('Please fill in all login fields')
+
+    const user = await User.findOne({username:req.body.username});
+    if (user == null)
+        throw new Error('Invalid credentials. No user found.')
+    
+    const isAuthenticated = await bcrypt.compare(req.body.password, user.password)
+    if (!isAuthenticated) 
+        throw new Error('Invalid credentials. Password does not match.')
+    
+    return user
+}
+
+async function validateRegister(req){
+    if (req.body.username == '' || req.body.email == '' || req.body.password == '')
+        throw new Error('Please fill in all register fields')
+
+    if (req.body.password.length < 6)
+        throw new Error('Password must be at least 6 characters')
+
+    if(await User.exists({username: req.body.username}))
+        throw new Error('Username already exists')
 }

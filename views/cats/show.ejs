@@ -1,1 +1,15 @@
-<h2>Cat</h2>
+<h2><%= cat.imageTitle %></h2>
+<% if (locals.cat.breed) { %>
+    <h3><%= cat.breed %></h3>
+<% } %>
+<a href="/cats/<%= cat.id %>">
+    <img src="<%= cat.imageUrl %>" alt="" width="600">
+</a>
+
+<p><%= cat.shortDescription %></p>
+
+<% if (locals.cat.longDescription) { %>
+    <p><%= cat.longDescription %></p>
+<% } %>
+<%- include("../partials/favorite_button.ejs", {cat: cat}) %>
+<%- include("../partials/admin_buttons.ejs", {cat: cat}) %>

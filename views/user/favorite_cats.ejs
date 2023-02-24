@@ -1,6 +1,6 @@
-<h2>Most loved cats</h2>
+<h2>lovely kittes</h2>
 <div>
-    <% topCats.forEach(cat=>{ %>
+    <% favoriteCats.forEach(cat=>{ %>
         <h3> <%= cat.imageTitle %> </h3>
         <% if (cat.breed) { %>
             <h4><%= cat.breed %></h4>
@@ -10,7 +10,7 @@
         </a>
         <p><%= cat.shortDescription %></p>
 
-        <%- include("./partials/favorite_button.ejs", {cat: cat}) %>
-        <%- include("./partials/admin_buttons.ejs", {cat: cat}) %>
+        <%- include("../partials/favorite_button.ejs", {cat: cat}) %>
+        <%- include("../partials/admin_buttons.ejs", {cat: cat}) %>
     <% }) %>
 </div>
