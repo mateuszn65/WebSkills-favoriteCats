@@ -23,7 +23,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-
+console.log('prod ', prod)
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -33,7 +33,8 @@ app.use(session({
         secure: prod,
         sameSite: prod ? 'none' : 'lax',
         maxAge: parseInt(process.env.SESSION_MAX_AGE),
-     },
+    },
+    proxy: prod,
 }));
 app.use(setUser);
 
