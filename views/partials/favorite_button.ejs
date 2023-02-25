@@ -1,5 +1,6 @@
 <% if (locals.user) { %>
     <button type="button" 
+    class="btn btn-primary"
     data-is-favorite="<%= cat.isFavorite %>" 
     data-cat-id="<%= cat.id %>" 
     onclick="favoriteButtonHandler(this)" >

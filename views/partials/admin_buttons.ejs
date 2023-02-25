@@ -1,6 +1,6 @@
 <% if (locals.user?.isAdmin) { %>
-    <div>
-        <a href="/cats/edit/<%= cat.id %>">Edit</a>
+    <div class="btn-row">
+        <a href="/cats/edit/<%= cat.id %>" class="btn btn-primary">Edit</a>
         <%- include("../partials/deleteForm.ejs", {url: `/cats/${cat.id}`}) %>
     </div>
 <% } %>

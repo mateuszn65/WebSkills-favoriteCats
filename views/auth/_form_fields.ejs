@@ -1,25 +1,48 @@
-<label for="username<%= part %>">Username</label>
-<input type="text" name="username" id="username<%= part %>" 
-    <% if (locals.formValues && locals.formValues.username) { %>
-        value="<%= formValues.username %>"
-    <% } %>
->
+<div class="form-row">
+    <div class="form-item">        
+        <label for="username<%= part %>">Username</label>
+        <input type="text" name="username" id="username<%= part %>" 
+            <% if (locals.formValues && locals.formValues.username) { %>
+                value="<%= formValues.username %>"
+            <% } %>
+        >
+
+        
+    </div>
+</div>
 
 <% if (locals.email) { %>
-    <label for="email<%= part %>">Email</label>
-    <input type="email" name="email" id="email<%= part %>" 
-    <% if (locals.formValues && locals.formValues.email) { %>
-        value="<%= formValues.email %>"
-    <% } %>
-    >
+    <div class="form-row">
+        <div class="form-item">        
+            <label for="email<%= part %>">Email</label>
+            <input type="email" name="email" id="email<%= part %>" 
+            <% if (locals.formValues && locals.formValues.email) { %>
+                value="<%= formValues.email %>"
+            <% } %>
+            >
+        </div>
+    </div>
 <% } %>
 
-<label for="password<%= part %>">Password</label>
-<input type="password" name="password" id="password<%= part %>" 
-    <% if (locals.formValues && locals.formValues.password) { %>
-        value="<%= formValues.password %>"
-    <% } %>
->
+<div class="form-row">
+    <div class="form-item">        
+        <label for="password<%= part %>">Password</label>
+        <input type="password" name="password" id="password<%= part %>" 
+            <% if (locals.formValues && locals.formValues.password) { %>
+                value="<%= formValues.password %>"
+            <% } %>
+        >
+        
+
+        
+    </div>
+</div>
+
+
+
+
+
+
 
 
 

@@ -1,8 +1,46 @@
-*{
+@import 'shared/fonts.css';
+@import 'shared/variables.css';
+@import 'shared/header.css';
+@import 'shared/buttons.css';
+@import 'shared/forms.css';
+
+*, *::before, *::after{
     box-sizing: border-box;
 }
 
+:root{
+    font-family: 'Gotham Rounded';
+    font-size: 20px;
+    color: var(--color-text-light);
+}
+
 body{
-    font-family: 'Poppins', sans-serif;
-    background: #6e6e6e;
+    background: linear-gradient(to right, var(--color-background-dark), var(--color-background-light));
+}
+
+.container{
+    max-width: 1200px;
+    margin: auto;
+    margin-bottom: 3rem;
+}
+
+.inner-container{
+    margin: 0 2rem;
+}
+
+.error-message{
+    color: hsl(var(--color-danger-hue), 100%, 50%);
+    font-size: 0.75rem;
+    margin: 0.5rem auto;
+    text-align: center;
+}
+
+.auth-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.auth-item{    
+    width: max(300px, 45%);
 }

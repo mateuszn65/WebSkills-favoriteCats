@@ -1,11 +1,44 @@
-<label>Image Title</label>
-<input required type="text" name="imageTitle" value="<%= cat.imageTitle %>">
-<label>Image Url</label>
-<input required type="text" name="imageUrl" value="<%= cat.imageUrl %>">
-<label>Breed</label>
-<input type="text" name="breed" value="<%= cat.breed %>">
-<label>Short Description</label>
-<input required type="text" name="shortDescription" value="<%= cat.shortDescription %>">
-<label>Long Description</label>
-<input type="text" name="longDescription" value="<%= cat.longDescription %>">
+<div class="form-row">
+  <div class="form-item">
+    <label>Image Title</label>
+    <input
+      required
+      type="text"
+      name="imageTitle"
+      value="<%= cat.imageTitle %>"
+    />
+  </div>
+</div>
 
+<div class="form-row">
+  <div class="form-item">
+    <label>Image Url</label>
+    <input required type="text" name="imageUrl" value="<%= cat.imageUrl %>" />
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-item">
+    <label>Breed</label>
+    <input type="text" name="breed" value="<%= cat.breed %>" />
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-item">
+    <label>Short Description</label>
+    <input
+      required
+      type="text"
+      name="shortDescription"
+      value="<%= cat.shortDescription %>"
+    />
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-item">
+    <label>Long Description</label>
+    <textarea name="longDescription"><%= cat.longDescription %></textarea>
+  </div>
+</div>

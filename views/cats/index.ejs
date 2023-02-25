@@ -1,4 +1,5 @@
-<h2>Cats</h2>
+<h2 class="page-header">Cats</h2>
+
 <div>
     <% cats.forEach(cat=>{ %>
         <h3> <%= cat.imageTitle %> </h3>
@@ -9,7 +10,7 @@
             <img src="<%= cat.imageUrl %>" alt="" width="300">
         </a>
         <p><%= cat.shortDescription %></p>
-
+    
         <%- include("../partials/favorite_button.ejs", {cat: cat}) %>
         <%- include("../partials/admin_buttons.ejs", {cat: cat}) %>
     <% }) %>
