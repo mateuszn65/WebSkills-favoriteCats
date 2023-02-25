@@ -6,7 +6,6 @@ exports.favoriteCats = async(req, res) => {
     try {
         let favoriteCats = await FavoriteCat.find({ user: req.session.user.id }).populate('cat').exec()
         favoriteCats = favoriteCats.map(favoriteCat=>{
-            console.log(favoriteCat)
             favoriteCat.cat.isFavorite = true
             return favoriteCat.cat
         })
@@ -26,17 +25,19 @@ exports.addCatToFavorites = async(req, res) => {
             user: user
         })
         await favoriteCat.save()        
-        res.redirect('/cats')
+        res.sendStatus(204)
     } catch (error) {
-        res.redirect('/cats')
+        res.sendStatus(500)
     }
 }
 
 exports.removeCatFromFavorites = async(req, res) => {
     try {
-        await FavoriteCat.deleteOne({ cat: req.params.id, user: req.session.user.id })
-        res.redirect('/cats')
+        const favoriteCat = await FavoriteCat.findOne({cat: req.params.id, user: req.session.user.id}).populate('cat').exec()
+        if (favoriteCat == null) return res.sendStatus(404)
+        await favoriteCat.remove()
+        res.sendStatus(204)
     } catch (error) {
-        res.redirect('/cats')
+        res.sendStatus(500)
     }
 }

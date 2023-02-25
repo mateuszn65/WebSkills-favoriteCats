@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session')
 const methodOverride = require('method-override');
+const { isLoggedIn } = require('./middleware/sessionMiddleware');
 
 const indexRouter = require('./routes/index');
 const catsRouter = require('./routes/cats');
@@ -51,6 +52,6 @@ db.once('open', () => console.log('Connected to Mongoose'));
 app.use('/', indexRouter);
 app.use('/cats', catsRouter);
 app.use('/auth', authRouter);
-app.use('/user', userRouter);
+app.use('/user', isLoggedIn, userRouter);
 
 app.listen(process.env.PORT || 3000);

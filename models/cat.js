@@ -30,9 +30,6 @@ const catSchema = new moongoose.Schema({
     }
 });
 
-// catSchema.virtual('numFavorites').get( function() {
-//     return  FavoriteCat.find({ cat: this._id }).count().exec();
-// });
 
 catSchema.pre('remove', async function(next) {
     await FavoriteCat.deleteMany({ cat: this._id });

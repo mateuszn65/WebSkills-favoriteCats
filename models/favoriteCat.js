@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Cat = require('./cat');
+
 const favoriteCatSchema = new mongoose.Schema({
     cat: {
         type: mongoose.Schema.Types.ObjectId,
@@ -22,8 +22,10 @@ favoriteCatSchema.pre('save', async function(next) {
     await this.cat.save();
     next();
 });
+
+
 favoriteCatSchema.pre('remove', async function(next) {
-    this.cat.numFavorites--;
+    this.cat.numFavorites--;                
     await this.cat.save();
     next();
 });
