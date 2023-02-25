@@ -5,4 +5,5 @@
     --color-background-dark: hsl(var(--color-base-hue), 100%, 10%);
     --color-background-light: hsl(var(--color-base-hue), 100%, 24%);
     --color-text-light: hsl(var(--color-base-hue), 100%, 90%);
+    --color-grid-item-bg: hsl(var(--color-base-hue), 20%, 8%);
 }

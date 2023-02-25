@@ -8,7 +8,8 @@ function removeFromFavorites(button) {
             if (window.location.pathname === FAVORITE_PATH) 
                 return removeFavoriteCatFromList(catId)
             button.dataset.isFavorite = ''
-            button.textContent = 'Add to Favorites'
+            button.classList.remove('fi-ss-heart')
+            button.classList.add('fi-rs-heart')
             return 
         }
     }).catch(err => console.log(err))
@@ -21,7 +22,8 @@ function addToFavorites(button) {
     .then(res => {
         if (res.ok) {
             button.dataset.isFavorite = true
-            button.textContent = 'Remove from Favorites'
+            button.classList.remove('fi-rs-heart')
+            button.classList.add('fi-ss-heart')
             return 
         }
     }).catch(err => console.log(err))

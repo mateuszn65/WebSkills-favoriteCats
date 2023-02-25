@@ -1,13 +1,10 @@
+
 <% if (locals.user) { %>
-    <button type="button" 
-    class="btn btn-primary"
+    <% catHearthClass = locals.cat.isFavorite ? 'fi-ss-heart' : 'fi-rs-heart' %>
+    <i type="button" 
+    class="btn-favorite fi <%= catHearthClass %>"
     data-is-favorite="<%= cat.isFavorite %>" 
     data-cat-id="<%= cat.id %>" 
     onclick="favoriteButtonHandler(this)" >
-        <% if (locals.cat.isFavorite) { %>
-            Remove from Favorites
-        <% } else { %>
-            Add to Favorites
-        <% } %>
-    </button>
+    </i>
 <% } %>

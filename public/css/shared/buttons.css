@@ -53,3 +53,37 @@
 .btn-row > *:first-child{
     margin-left: 0;
 }
+
+.btn-favorite{
+    position: absolute;
+    padding: .1rem;
+}
+.btn-favorite{
+    font-size: 1.7rem;
+    color: var(--color-btn-primary-bg);
+    
+}
+.btn-favorite:hover,
+.btn-favorite:focus{
+    color: var(--color-btn-primary-text);
+    cursor: pointer;
+    transform: rotateY(180deg);
+    transition: color 1s, transform 1s;
+}
+.btn-favorite:not(:hover)  {
+    transform: rotateY(0deg);
+    transition: transform 1s;
+} 
+
+.grid-admin-btn{
+    font-size: .7rem;
+    margin-left: 0;
+}
+
+.grid-admin-btn-row{
+    position: absolute;
+    bottom: 0;
+    background-color: var(--color-grid-item-bg);
+    width: 100%;
+    justify-content: center;
+}

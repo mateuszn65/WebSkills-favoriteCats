@@ -1,6 +1,8 @@
 <% if (locals.user?.isAdmin) { %>
-    <div class="btn-row">
-        <a href="/cats/edit/<%= cat.id %>" class="btn btn-primary">Edit</a>
-        <%- include("../partials/deleteForm.ejs", {url: `/cats/${cat.id}`}) %>
+    <% gridAdminButton = locals.grid ? 'grid-admin-btn' : '' %>
+    <% gridAdminButtonRow = locals.grid ? 'grid-admin-btn-row' : '' %>
+    <div class="btn-row <%= gridAdminButtonRow %>">
+        <a href="/cats/edit/<%= cat.id %>" class="btn btn-primary <%= gridAdminButton %>">Edit</a>
+        <%- include("../partials/deleteForm.ejs", {url: `/cats/${cat.id}`, gridAdminButton: gridAdminButton}) %>
     </div>
 <% } %>

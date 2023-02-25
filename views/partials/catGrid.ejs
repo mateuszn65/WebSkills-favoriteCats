@@ -1,0 +1,14 @@
+<div class="cat-grid">
+    <% cats.forEach(cat=>{ %>
+        <div class="cat-grid-item">
+            <a class="cat-grid-link" href="/cats/<%= cat.id %>">
+                <img src="<%= cat.imageUrl %>" class="cat-grid-image">
+            </a>
+            <div class="image-title"> <%= cat.imageTitle %> </div>
+            <div class="short-description"><%= cat.shortDescription %></div>
+            
+            <%- include("../partials/favorite_button.ejs", {cat: cat}) %>
+            <%- include("../partials/admin_buttons.ejs", {cat: cat, grid: true}) %>
+        </div>
+    <% }) %>
+</div>
