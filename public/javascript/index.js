@@ -41,3 +41,4 @@ function removeFavoriteCatFromList(catId){
     const cat = document.getElementById(catId)
     cat.remove()
 }
+

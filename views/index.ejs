@@ -1,16 +1,24 @@
 <h2 class="page-header">Most loved cats</h2>
-<div>
-    <% topCats.forEach(cat=>{ %>
-        <h3> <%= cat.imageTitle %> </h3>
-        <% if (cat.breed) { %>
-            <h4><%= cat.breed %></h4>
+<div id="carousel" class="carousel-container">
+    <div class="carousel-item">
+        <div class="carousel-image-container">
+            <img class="carousel-image">
+        </div>
+        <div class="carousel-details">
+            <div class="carousel-details-item" id="title"></div>
+            <div class="carousel-details-item" id="description"></div>
+            <div class="carousel-details-item">
+                <div id="num-favorites">10</div>
+                <div>users love this cat</div>
+            </div>
+        </div>
+    </div>
+    <div class="carousel-option-container">
+        <% for(let i = 0; i < noTopCats; i++) {%>
+            <div class="carousel-option-item" data-index="<%= i %>" onclick="carouselHandler(this)"></div>
         <% } %>
-        <a href="/cats/<%= cat.id %>">
-            <img src="<%= cat.imageUrl %>" alt="" width="300">
-        </a>
-        <p><%= cat.shortDescription %></p>
-
-        <%- include("./partials/favorite_button.ejs", {cat: cat}) %>
-        <%- include("./partials/admin_buttons.ejs", {cat: cat}) %>
-    <% }) %>
+        <i class="fi fi-br-arrow-left" id="arrow-left"></i>
+        <i class="fi fi-br-arrow-right" id="arrow-right"></i>
+    </div>
 </div>
+<script src="/javascript/carousel.js" defer></script>

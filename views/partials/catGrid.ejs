@@ -1,6 +1,6 @@
 <div class="cat-grid">
     <% cats.forEach(cat=>{ %>
-        <div class="cat-grid-item">
+        <div class="cat-grid-item" id="<%= cat.id %>">
             <a class="cat-grid-link" href="/cats/<%= cat.id %>">
                 <img src="<%= cat.imageUrl %>" class="cat-grid-image">
             </a>

@@ -1,0 +1,103 @@
+:root{
+    --carousel-height: 400px;
+}
+.carousel-container{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-grid-item-bg);
+    border-radius: 0.25rem;
+    height: var(--carousel-height);
+    width: 100%;
+    overflow: hidden;
+}
+.carousel-image{
+    width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.carousel-item{
+    display: flex;
+}
+.carousel-details-item{
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+
+.carousel-image-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    height: calc(var(--carousel-height) - 4rem);
+    min-width: max(60%, var(--cat-grid-item-width));
+}
+
+.carousel-details{
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    max-width: min(50%, 300px);
+    height: calc(var(--carousel-height) - 4rem);
+}
+
+.carousel-option-container{
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+
+.carousel-option-item{
+    width: 2rem;
+    height: 0.3rem;
+    background-color: var(--color-btn-primary-bg);
+    margin: 1rem .5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease-in-out;
+}
+.carousel-option-item.selected{
+    background-color: var(--color-btn-primary-text);
+}
+.carousel-option-item:hover{
+    background-color: var(--color-btn-primary-bg-dark);
+    cursor: pointer;
+}
+
+.carousel-details-item#title{
+    font-size: 1.5rem;
+}
+.carousel-details-item > #num-favorites{
+    padding-right: .5rem;
+}
+.carousel-details-item{
+    overflow: clip;
+    text-overflow: clip;
+}
+
+.carousel-option-container i{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: var(--color-btn-primary-bg);
+    transition: color 0.2s ease-in-out;
+}
+.carousel-option-container i:hover{
+    color: var(--color-btn-primary-bg-dark);
+    cursor: pointer;
+}
+.carousel-option-container .fi-br-arrow-left{
+    left: 1rem;
+}
+.carousel-option-container .fi-br-arrow-right{
+    right: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+    .carousel-option-item{
+        display: none;
+    }
+}
