@@ -40,7 +40,7 @@ exports.addNewCat = async(req, res) => {
     })
     try {
         await cat.save()
-        res.redirect('/cats/new')
+        res.redirect(`/cats/${cat.id}`)
     } catch (error) {
         res.render('cats/new', {
             cat: cat,
