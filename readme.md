@@ -3,13 +3,6 @@
 The Cat App is a web application that allows users to view and favorite cats.
 
 
-## Ready heroku app
-
-https://favorite-cats.herokuapp.com/
-
-
-### Admin credentials for heroku app were send by an email
-
 
 ## Local Installation
 
